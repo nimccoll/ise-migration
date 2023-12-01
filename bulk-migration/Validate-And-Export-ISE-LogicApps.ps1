@@ -57,9 +57,9 @@ $exportSucceededCount = 0
 $exportFailedCount = 0
 $exportFailed = @()
 $logicApps | ForEach-Object {
-    $body = '{"properties":{"workflows":[{"id":"' + $_ + '"}],"workflowExportOptions":""}}'
+    $currentLogicApp = $_
+    $body = '{"properties":{"workflows":[{"id":"' + $currentLogicApp + '"}],"workflowExportOptions":""}}'
     try {
-        $currentLogicApp = $_
         $validateResponse = Invoke-WebRequest -UseBasicParsing $validateUrl -Headers $head -ContentType 'application/json' -Method POST -Body $body
         if ($validateResponse.StatusCode -eq '200') {
             $validateSucceededCount = $validateSucceededCount + 1
@@ -87,7 +87,7 @@ $logicApps | ForEach-Object {
                 else {
                     $exportFailedCount = $exportFailedCount + 1
                     $exportFailed += $currentLogicApp
-                    Write-Host $_ 'Export failed' -ForegroundColor Red
+                    Write-Host $currentLogicApp 'Export failed' -ForegroundColor Red
                     Write-Host 'Details' -ForegroundColor Red
                     Write-Host '=======' -ForegroundColor Red
                     Write-Host 'Status Code:' $exportResponse.StatusCode -ForegroundColor Red
@@ -98,7 +98,7 @@ $logicApps | ForEach-Object {
             catch {
                 $exportFailedCount = $exportFailedCount + 1
                 $exportFailed += $currentLogicApp
-                Write-Host $_ 'Export failed' -ForegroundColor Red
+                Write-Host $currentLogicApp 'Export failed' -ForegroundColor Red
                 Write-Host 'Details' -ForegroundColor Red
                 Write-Host '=======' -ForegroundColor Red
                 Write-Host $PSItem.ToString() -ForegroundColor Red
@@ -106,9 +106,9 @@ $logicApps | ForEach-Object {
             }
         }
         else {
-            $validateFailedCount += $validateFailedCount + 1
+            $validateFailedCount = $validateFailedCount + 1
             $validateFailed += $currentLogicApp
-            Write-Host $_ 'Validation failed' -ForegroundColor Red
+            Write-Host $currentLogicApp 'Validation failed' -ForegroundColor Red
             Write-Host 'Details' -ForegroundColor Red
             Write-Host '=======' -ForegroundColor Red
             Write-Host 'Status Code:' $validateResponse.StatusCode -ForegroundColor Red
@@ -117,9 +117,9 @@ $logicApps | ForEach-Object {
         }
     }
     catch {
-            $validateFailedCount += $validateFailedCount + 1
+            $validateFailedCount = $validateFailedCount + 1
             $validateFailed += $currentLogicApp
-            Write-Host $_ 'Validation failed' -ForegroundColor Red
+            Write-Host $currentLogicApp 'Validation failed' -ForegroundColor Red
             Write-Host 'Details' -ForegroundColor Red
             Write-Host '=======' -ForegroundColor Red
             Write-Host $PSItem.ToString() -ForegroundColor Red
