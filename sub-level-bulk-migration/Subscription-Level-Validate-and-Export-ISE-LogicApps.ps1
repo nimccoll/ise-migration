@@ -1,3 +1,15 @@
+﻿#===============================================================================
+# Microsoft FastTrack for Azure
+# Validate and export Logic Apps in an Integration Service Environment
+# Based on https://github.com/wsilveiranz/iseexportutilities by Wagner Silveira
+#===============================================================================
+# Copyright © Microsoft Corporation.  All rights reserved.
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY
+# OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT
+# LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+# FITNESS FOR A PARTICULAR PURPOSE.
+#===============================================================================
+
 # Import the AzureRM module if not already imported
 # Import-Module AzureRM
 
